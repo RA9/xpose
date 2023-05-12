@@ -1,10 +1,21 @@
 <script>
 	import Nav from '$lib/Nav.svelte';
+	
+	export let data;
+
+	/**
+	 * @type {null}
+	 */
+	let user = null;
+
+	$: user = data.user;
 </script>
 
-<Nav />
+<Nav {user} />
 
-<slot />
+<div class="mt-4">
+	<slot />
+</div>
 
 <footer class="bg-gray-900 text-white px-8 py-16">
 	<div class="max-w-screen-xl mx-auto flex flex-wrap justify-between items-start">

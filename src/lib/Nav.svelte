@@ -1,3 +1,10 @@
+<script>
+	/**
+	 * @type {any}
+	 */
+	 export let user;
+</script>
+
 <nav class="bg-white shadow-lg">
 	<div class="max-w-6xl mx-auto px-4">
 		<div class="flex justify-between">
@@ -35,7 +42,12 @@
 
 			<!-- secondary nav -->
 			<div class="hidden md:flex items-center space-x-1">
-				<a href="#" class="bg-gray-900 text-white px-4 py-2 rounded-lg">Join now</a>
+				{#if user}
+					<a href="/_/dashboard" class="py-5 px-3 text-gray-700 hover:text-gray-900">Dashboard</a>
+					<!-- <a href="/logout" class="py-5 px-3 text-gray-700 hover:text-gray-900">Logout</a> -->
+				{:else}
+					<a href="/login" class="bg-gray-900 text-white px-4 py-2 rounded-lg">Login</a>
+				{/if}
 			</div>
 
 			<!-- mobile button goes here -->
@@ -64,7 +76,7 @@
 	<div class="mobile-menu hidden md:hidden">
 		<a href="/" class="block py-2 px-4 text-sm hover:bg-gray-200">Home</a>
 		<a href="/projects" class="block py-2 px-4 text-sm hover:bg-gray-200">Projects</a>
-        <a href="/blog" class="block py-2 px-4 text-sm hover:bg-gray-200">Blog</a>
+		<a href="/blog" class="block py-2 px-4 text-sm hover:bg-gray-200">Blog</a>
 		<a href="/about" class="block py-2 px-4 text-sm hover:bg-gray-200">About</a>
 	</div>
 </nav>

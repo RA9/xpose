@@ -1,5 +1,7 @@
-<!-- component -->
-<!-- This is an example component -->
+<sveltekit:head>
+	<title>Latest posts - Xpose</title>
+</sveltekit:head>
+
 <section class="flex flex-row flex-wrap mx-auto">
 	<!-- Card Component -->
 	<div class="transition-all duration-150 flex w-full px-4 py-6 md:w-1/2 lg:w-1/3">
