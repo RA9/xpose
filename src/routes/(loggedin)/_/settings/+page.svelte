@@ -2,17 +2,11 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 
-	const queryPage = $page.url.searchParams.get('page');
+	export let data;
+	$: isChangePassword = data.queryPage === 'change-password' || data.queryPage === null;
 
-	$: isChangePassword = queryPage === 'change-password' || queryPage === null;
 
-	onMount(() => {
-		if (queryPage === 'payments') {
-			console.log('payments');
-		}
-	});
-
-	console.log(isChangePassword, queryPage);
+	console.log(isChangePassword, data.queryPage);
 </script>
 
 <sveltekit:head>

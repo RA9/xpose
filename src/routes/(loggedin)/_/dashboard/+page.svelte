@@ -1,8 +1,32 @@
 <script>
 	import CreateProject from "$lib/modals/projects/CreateProject.svelte";
+	import { pb } from "$lib/pocketbase.js";
+	import { onMount } from "svelte";
 
 	export let data;
+
+	/**
+	 * @type {number}
+	 */
+	let projectStats;
+	/**
+	 * @type {number}
+	 */
+	let userStats;
+	let  viewStats = 0;
+
+	onMount(async () => {
+		projectStats = (await pb.collection("projects").getFullList()).length;
+		userStats = (await pb.collection("users").getFullList()).length;
+		// viewStats = await pb.collection("views").getFullList();
+	});
+
 </script>
+
+
+<sveltekit:head>
+	<title>Dashboard - Xpose</title>
+</sveltekit:head>
 
 <!-- Page header -->
 <div class="bg-white shadow">
@@ -13,14 +37,14 @@
 				<div class="flex items-center">
 					<img
 						class="hidden h-16 w-16 rounded-full sm:block"
-						src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
+						src="https://api.multiavatar.com/{data?.user?.username}.png?apikey=CvE4RFVuUJqZ1l"
 						alt=""
 					/>
 					<div>
 						<div class="flex items-center">
 							<img
 								class="h-16 w-16 rounded-full sm:hidden"
-								src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
+								src="https://api.multiavatar.com/{data?.user?.username}.png?apikey=CvE4RFVuUJqZ1l"
 								alt=""
 							/>
 							<h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
@@ -51,15 +75,15 @@
 				</div>
 			</div>
 			<div class="mt-6 flex space-x-3 md:ml-4 md:mt-0">
-				<button
-					type="button"
+				<a
+					href="/_/users/create"
 					class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-					>Add Users</button
+					>Add Users</a
 				>
-				<button
-					type="button"
+				<a
+					href="/_/projects/create"
 					class="inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-					>Create Project</button
+					>Create Project</a
 				>
 			</div>
 		</div>
@@ -95,7 +119,7 @@
 							<dl>
 								<dt class="truncate text-sm font-medium text-gray-500">Total Projects</dt>
 								<dd>
-									<div class="text-lg font-medium text-gray-900">0</div>
+									<div class="text-lg font-medium text-gray-900">{projectStats || 0}</div>
 								</dd>
 							</dl>
 						</div>
@@ -132,7 +156,7 @@
 							<dl>
 								<dt class="truncate text-sm font-medium text-gray-500">Total Users</dt>
 								<dd>
-									<div class="text-lg font-medium text-gray-900">0</div>
+									<div class="text-lg font-medium text-gray-900">{userStats || 0}</div>
 								</dd>
 							</dl>
 						</div>

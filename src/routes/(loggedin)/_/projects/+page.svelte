@@ -1,9 +1,26 @@
 <script>
-	import { goto } from "$app/navigation";
+	import { goto } from '$app/navigation';
+	import { pb } from '$lib/pocketbase';
+	import { onMount } from 'svelte';
 
-    function redirectUrl() {
-        return goto("/_/projects/create");
-    }
+	/**
+	 * @type {string | any[]}
+	 */
+	let projects = [];
+
+	onMount(async () => {
+		const res = await pb.collection('projects').getFullList({
+			sort: '-created',
+			expand: 'author'
+		});
+
+		console.log({ res });
+		projects = res;
+	});
+
+	function redirectUrl() {
+		return goto('/_/projects/create');
+	}
 </script>
 
 <sveltekit:head>
@@ -16,7 +33,7 @@
 			<div class="my-6 flex justify-end space-x-3 md:ml-4 md:mt-0">
 				<button
 					type="button"
-                    on:click={redirectUrl}
+					on:click={redirectUrl}
 					class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
 					>Add Projects</button
 				>
@@ -44,33 +61,48 @@
 							>
 							<th
 								class="hidden bg-gray-50 px-6 py-3 text-left  text-sm font-semibold text-gray-900 md:block"
-								scope="col">Views</th
+								scope="col">Date</th
 							>
 							<th
 								class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
-								scope="col">Date</th
-							>
+								scope="col"
+							/>
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200 bg-white">
-						<tr class="bg-white">
-							<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500"> Project Solomon </td>
-							<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500">
-								Making online test seamless
-							</td>
-							<td class="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
-								Humble Nah
-							</td>
-							<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500"> 0 </td>
-							<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500">
-								<time datetime="2020-07-11">July 11, 2020</time>
-							</td>
-						</tr>
+						{#if projects && projects.length > 0}
+							{#each projects as project}
+								<tr class="bg-white">
+									<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500">{project?.name}</td
+									>
+									<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500">
+										{project?.description ?? 'No description'}
+									</td>
+									<td class="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
+										{project?.expand.author?.name}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500">
+										<time datetime="{new Date(project?.created).toISOString()}"
+											>{new Date(project?.created).toLocaleString('en-US', {
+												weekday: 'short',
+												year: 'numeric',
+												month: 'short',
+												day: 'numeric'
+											})}</time
+										>
+									</td>
+									<td class="whitespace-nowrap px-6 py-4  text-sm text-gray-500" />
+								</tr>
+							{/each}
+						{/if}
 
 						<!-- More transactions... -->
 					</tbody>
 				</table>
 				<!-- Pagination -->
+				{#if !(projects && projects.length > 0)}
+					<p class="bg-white text-2xl font-medium text-center p-6">No data available!!!</p>
+				{/if}
 				<nav
 					class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
 					aria-label="Pagination"

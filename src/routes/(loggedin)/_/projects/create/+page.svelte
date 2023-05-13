@@ -142,12 +142,6 @@
 				</div>
 				<div class="flex justify-end gap-4">
 					<button
-						class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-lg"
-						type="button"
-					>
-						Cancel
-					</button>
-					<button
 						class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg"
 						on:click|preventDefault={createProject}
 						type="submit"

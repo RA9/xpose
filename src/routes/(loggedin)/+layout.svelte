@@ -9,23 +9,29 @@
 
 	const user = data?.user;
 
-	console.log({user})
+	console.log({ user });
 
 	const navItems = [
 		{
 			name: 'Dashboard',
 			path: '/_/dashboard',
-			icons: ''
+			icon: `<svg aria-hidden="true" class="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>`
 		},
 		{
 			name: 'Projects',
 			path: '/_/projects',
-			icons: ''
+			icon: `<svg aria-hidden="true" class="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>`
 		},
 		{
 			name: 'Users',
 			path: '/_/users',
-			icons: ''
+			icon: `<svg aria-hidden="true"  class="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>`
 		}
 	];
 
@@ -120,20 +126,7 @@
 										: 'text-cyan-100 hover:bg-cyan-600 hover:text-white'} group flex items-center rounded-md px-2 py-2 text-base font-medium"
 									aria-current="page"
 								>
-									<svg
-										class="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke-width="1.5"
-										stroke="currentColor"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-										/>
-									</svg>
+									{@html navItem.icon}
 									{navItem.name}
 								</a>
 							{/each}
@@ -141,7 +134,7 @@
 						<div class="mt-6 pt-6">
 							<div class="space-y-1 px-2">
 								<a
-									href="#"
+									href="/_/settings"
 									class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-cyan-100 hover:bg-cyan-600 hover:text-white"
 								>
 									<svg
@@ -193,20 +186,8 @@
 								: 'text-cyan-100 hover:bg-cyan-600 hover:text-white'} group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6"
 							aria-current="page"
 						>
-							<svg
-								class="mr-4 h-6 w-6 flex-shrink-0 text-cyan-200"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								aria-hidden="true"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-								/>
-							</svg>
+							{@html navItem.icon}
+
 							{navItem.name}
 						</a>
 					{/each}
@@ -214,7 +195,7 @@
 				<div class="mt-6 pt-6">
 					<div class="space-y-1 px-2">
 						<a
-							href="#"
+							href="/_/settings"
 							class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-cyan-100 hover:bg-cyan-600 hover:text-white"
 						>
 							<svg
@@ -300,11 +281,12 @@
 							>
 								<img
 									class="h-8 w-8 rounded-full"
-									src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+									src="https://api.multiavatar.com/{user?.username}.png?apikey=CvE4RFVuUJqZ1l"
 									alt=""
 								/>
 								<span class="ml-3 hidden text-sm font-medium text-gray-700 lg:block"
-									><span class="sr-only">Open user menu for </span>{user?.name || user?.username}</span
+									><span class="sr-only">Open user menu for </span>{user?.name ||
+										user?.username}</span
 								>
 								<svg
 									class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block"
