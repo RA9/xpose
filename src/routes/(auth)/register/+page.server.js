@@ -6,7 +6,7 @@ export async function load(event) {
 
     const redirectUrl = url.searchParams.get('redirect') || null;
     if (event.locals.pb.authStore.isValid) {
-        throw redirect(302, redirectUrl ? redirectUrl : '/dashboard');
+        throw redirect(302, redirectUrl ? redirectUrl : '/_/dashboard');
     }
 
 

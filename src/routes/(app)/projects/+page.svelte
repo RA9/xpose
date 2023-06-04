@@ -1,3 +1,23 @@
+<script>
+	import { pb } from '$lib/pocketbase';
+	import { onMount } from 'svelte';
+
+	/**
+	 * @type {any[]}
+	 */
+	let projects = [];
+
+	onMount(async () => {
+		const res = await pb.collection('projects').getFullList({
+			sort: '-created',
+			expand: 'author'
+		});
+
+		console.log({ res });
+		projects = res;
+	});
+</script>
+
 <sveltekit:head>
 	<title>Projects - Xpose</title>
 	<link
@@ -107,38 +127,51 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-4 p-2">
-	<div class="max-w-sm mx-auto rounded-md overflow-hidden shadow-md">
-		<div class="bg-white shadow-lg rounded-lg overflow-hidden">
-			<img
-				class="w-full h-48 object-cover"
-				src="https://picsum.photos/500/300/?random"
-				alt="Project Image"
-			/>
-			<div class="p-4">
-				<h3 class="font-medium text-gray-800 mb-2">Project Title</h3>
-				<div class="flex items-center text-sm text-gray-600 mb-2">
-					<i class="far fa-comment mr-1" /> <span class="mr-4">10 comments</span>
-					<i class="fas fa-thumbs-up mr-1" /> <span class="mr-4">25 upvotes</span>
-					<i class="far fa-eye mr-1" /> <span>1000 views</span>
-				</div>
-				<p class="text-gray-600 mb-2">
-					Project description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Pellentesque ac fermentum diam, eu laoreet magna.
-				</p>
-				<div class="flex items-center">
+	{#each projects as project}
+		<a href="/projects/{project.id}">
+			<div class="max-w-sm mx-auto rounded-md overflow-hidden shadow-md">
+				<div class="bg-white shadow-lg rounded-lg overflow-hidden">
 					<img
-						class="w-10 h-10 rounded-full mr-4"
-						src="https://picsum.photos/200/200/?random"
-						alt="Author Image"
+						class="w-full h-48 object-cover"
+						src="https://picsum.photos/500/300/?random"
+						alt="Project Image"
 					/>
-					<div>
-						<p class="text-gray-800 font-medium mb-1">Author Name</p>
-						<p class="text-gray-600 text-sm">Published on May 5, 2023</p>
+					<div class="p-4">
+						<h3 class="font-medium text-gray-800 mb-2">{project?.name || 'No name'}</h3>
+						<div class="flex items-center text-sm text-gray-600 mb-2">
+							<i class="far fa-comment mr-1" /> <span class="mr-4">10 comments</span>
+							<i class="fas fa-thumbs-up mr-1" /> <span class="mr-4">25 upvotes</span>
+							<i class="far fa-eye mr-1" /> <span>1000 views</span>
+						</div>
+						<p class="text-gray-600 mb-2">
+							{project?.description || 'No description'}
+						</p>
+						<div class="flex items-center">
+							<img
+								class="w-10 h-10 rounded-full mr-4"
+								src="https://picsum.photos/200/200/?random"
+								alt="Author Image"
+							/>
+							<div>
+								<p class="text-gray-800 font-medium mb-1">
+									{project?.expand?.author?.name ||
+										project?.expand?.author?.email ||
+										'No author name'}
+								</p>
+								<p class="text-gray-600 text-sm">
+									Published on {new Date(project?.created).toLocaleString('en-US', {
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric'
+									})}
+								</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		</a>
+	{/each}
 </div>
 
 <style lang="postcss">
