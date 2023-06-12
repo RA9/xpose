@@ -29,6 +29,8 @@
 	 */
 	let repoLink = null;
 
+	let isLoading = false;
+
 	$: {
 		if (img_cover) {
 			img_cover = img_cover[0];
@@ -43,6 +45,7 @@
 
 	async function createProject() {
 		const formData = new FormData();
+		isLoading = true;
 		try {
 			formData.append('project_img', img_cover);
 			formData.append('name', name);
@@ -59,6 +62,7 @@
 		} catch (err) {
 			console.log(err);
 			error = true;
+			isLoading = false;
 		}
 	}
 </script>
@@ -142,11 +146,13 @@
 				</div>
 				<div class="flex justify-end gap-4">
 					<button
-						class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg"
+						disabled={isLoading}
+						class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg {isLoading &&
+							'opacity-50 cursor-not-allowed'}"
 						on:click|preventDefault={createProject}
 						type="submit"
 					>
-						Create Project
+						{isLoading ? 'Creating Project...' : 'Create Project'}
 					</button>
 				</div>
 			</form>
