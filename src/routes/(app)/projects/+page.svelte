@@ -133,8 +133,8 @@
 				<div class="bg-white shadow-lg rounded-lg overflow-hidden">
 					<img
 						class="w-full h-48 object-cover"
-						src="https://picsum.photos/500/300/?random"
-						alt="Project Image"
+						src={pb.getFileUrl(project, project?.project_img)}
+						alt={project?.name || 'No name'}
 					/>
 					<div class="p-4">
 						<h3 class="font-medium text-gray-800 mb-2">{project?.name || 'No name'}</h3>
@@ -143,14 +143,18 @@
 							<i class="fas fa-thumbs-up mr-1" /> <span class="mr-4">25 upvotes</span>
 							<i class="far fa-eye mr-1" /> <span>1000 views</span>
 						</div>
-						<p class="text-gray-600 mb-2">
+						<p class="text-gray-600 mb-2  sm:h-20">
 							{project?.description || 'No description'}
 						</p>
 						<div class="flex items-center">
 							<img
 								class="w-10 h-10 rounded-full mr-4"
-								src="https://picsum.photos/200/200/?random"
-								alt="Author Image"
+								src="https://api.multiavatar.com/{project?.expand.author.name ||
+									project?.expand.author.email ||
+									project?.expand.author.username}.png?apikey= CvE4RFVuUJqZ1lu"
+								alt="Avatar of {project?.expand.author.name ||
+									project?.expand.author.email ||
+									project?.expand.author.username}"
 							/>
 							<div>
 								<p class="text-gray-800 font-medium mb-1">
